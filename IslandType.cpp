@@ -213,7 +213,6 @@ bool islandType::init() {
     logger.err("Unable to load water tile.");
   if(!_tBridge.loadFromFile(assetsObj.getGraphicsName(graphics::TILE_BRIDGE)))
     logger.err("Unable to load bridge tile.");
-  logger.err("am i even logging");
 
   // Set Sprites
   _sGround.setTexture(_tGround);
@@ -229,6 +228,17 @@ bool islandType::init() {
   std::getline(std::cin, mapAppend);
   mapName.append(mapAppend);
   return getGrid();
+}
+
+/* ----------------------------------------------------------------------------
+ * Function:
+ *   getMouseStartingLoc()
+ *
+ * Description:
+ *   Returns the std::pair for mouse location.
+ * --------------------------------------------------------------------------*/
+std::pair<int, int> islandType::getMouseStartingLoc() {
+  return mouseStartLoc;
 }
 
 void debug(islandType& obj) {
