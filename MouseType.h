@@ -19,7 +19,7 @@ namespace dm {
   // Mouse class
   class mouseType {
     public:
-      mouseStatusEnum getMouseState() const
+      mouseStatusEnum getMouseState() const;
     private:
       const unsigned short int maxMouseMoves = 50;
       mouseStatusEnum mouseState;
