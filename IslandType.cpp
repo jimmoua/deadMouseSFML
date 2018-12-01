@@ -245,3 +245,20 @@ void debug(islandType& obj) {
   std::cout << "Grid size:   " << obj.gridSize << std::endl;
   std::cout << "Name of map: " << obj.mapName << std::endl;
 }
+
+/* ----------------------------------------------------------------------------
+ * Function:
+ *   _checkCollisions(std::pair<int, int>)
+ * Description:
+ *   Checks to see where the mouse is.
+ * --------------------------------------------------------------------------*/
+mouseStatusEnum islandType::_checkCollisions(std::pair<int, int> mouseLoc) {
+  mouseStatusEnum newMouseState = mouseStatusEnum::ALIVE;
+  switch(islandMap[mouseLoc.first][mouseLoc.second]) {
+    case -2:
+      newMouseState = mouseStatusEnum::ESCAPED;
+    case -1:
+      newMouseState = mouseStatusEnum::DROWNED;
+  }
+  return newMouseState;
+}

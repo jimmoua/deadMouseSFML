@@ -19,6 +19,8 @@ class islandType {
     void drawMap();
     unsigned short int getGridSize();
     std::pair<int, int> getMouseStartingLoc();
+    mouseStatusEnum _checkCollisions(std::pair<int, int>);
+    
     friend void debug(islandType&);
   private:
     // Grid information checker
