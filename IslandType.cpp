@@ -253,12 +253,16 @@ void debug(islandType& obj) {
  *   Checks to see where the mouse is.
  * --------------------------------------------------------------------------*/
 mouseStatusEnum islandType::_checkCollisions(std::pair<int, int> mouseLoc) {
-  mouseStatusEnum newMouseState = mouseStatusEnum::ALIVE;
+  mouseStatusEnum newMouseState;
   switch(islandMap[mouseLoc.first][mouseLoc.second]) {
     case -2:
       newMouseState = mouseStatusEnum::ESCAPED;
+      break;
     case -1:
       newMouseState = mouseStatusEnum::DROWNED;
+      break;
+    default:
+      newMouseState = mouseStatusEnum::ALIVE;
   }
   return newMouseState;
 }

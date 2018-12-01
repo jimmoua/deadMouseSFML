@@ -7,12 +7,13 @@ sf::Clock mouseType::_mouseMoveWaitTime;
  * Function:
  *   mouseType(std::pair<int, int>)
  * Description:
- *   Default ctor
+ *   The ctor
  * --------------------------------------------------------------------------*/
 mouseType::mouseType(std::pair<int, int> pos) {
   _mouseTexture.loadFromFile(assetsObj.getGraphicsName(graphics::TILE_MOUSE));
   _mouseSprite.setTexture(_mouseTexture);
   _mouseSprite.setPosition(pos.first*64, pos.second*64);
+  _currentMouseLoc = pos;
 }
 
 /* ----------------------------------------------------------------------------
@@ -47,22 +48,22 @@ void mouseType::_move() {
     switch(move) {
       case 0:
         _mouseSprite.move(0, -64);
-        _currentMouseLoc.second++;
+        _currentMouseLoc.first--;
         std::cout << "Mouse moved up\n";
         break;
       case 1:
         _mouseSprite.move(0, 64);
-        _currentMouseLoc.second--;
+        _currentMouseLoc.first++;
         std::cout << "Mouse moved down\n";
         break;
       case 2:
         _mouseSprite.move(-64, 0);
-        _currentMouseLoc.first--;
+        _currentMouseLoc.second--;
         std::cout << "cout << Mouse moved left\n";
         break;
       case 3:
         _mouseSprite.move(64, 0);
-        _currentMouseLoc.first++;
+        _currentMouseLoc.second++;
         std::cout << "cout << Mouse moved right\n";
         break;
     }

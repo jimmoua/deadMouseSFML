@@ -22,7 +22,7 @@ class mouseType {
     void _setMouseStatus(const mouseStatusEnum&);
   private:
     const unsigned short int _maxMouseMoves = 50;
-    mouseStatusEnum _mouseState;
+    mouseStatusEnum _mouseState = mouseStatusEnum::ALIVE;
     std::pair<int, int> _currentMouseLoc;
     static sf::Clock _mouseMoveWaitTime;
 
