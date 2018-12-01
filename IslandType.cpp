@@ -157,15 +157,35 @@ bool islandType::getGrid() {
   return true;
 }
 
+/* ----------------------------------------------------------------------------
+ * Function:
+ *   DrawMap()
+ *
+ * Description:
+ *   Draws the grid on the SFML window.
+ * --------------------------------------------------------------------------*/
 void islandType::drawMap() {
-  const sf::Vector2u reso = winObj._getWindowResoSize();
-
+  // Each sprite is a 64x64 because that's how the png were made.
   // Draw rows
-  for(unsigned short int x = 0; x != reso.x; x++) {
-
+  for(unsigned short int x = 0; x != gridSize; x++) {
     // Draw cols
-    for(unsigned short int y = 0; y != reso.y; y++) {
-
+    for(unsigned short int y = 0; y != gridSize; y++) {
+      switch(islandMap[x][y]) {
+        case -2:
+          winObj._getRefSFMLWindow()->draw(_sBridge);
+          _sBridge.setPosition(y*64, x*64);
+          break;
+        case -1:
+          winObj._getRefSFMLWindow()->draw(_sWater);
+          _sWater.setPosition(y*64, x*64);
+          break;
+        case 0:
+        case 1:
+          winObj._getRefSFMLWindow()->draw(_sGround);
+          _sGround.setPosition(y*64, x*64);
+          break;
+        default: break;
+      }
     }
   }
 }
@@ -177,9 +197,13 @@ unsigned short int islandType::getGridSize() {
 
 bool islandType::init() {
   // Load the textures in
-  _tGround.loadFromFile(assetsObj.getGraphicsName(graphics::TILE_LAND));
-  _tWater.loadFromFile(assetsObj.getGraphicsName(graphics::TILE_WATER));
-  _tBridge.loadFromFile(assetsObj.getGraphicsName(graphics::TILE_BRIDGE));
+  if(!_tGround.loadFromFile(assetsObj.getGraphicsName(graphics::TILE_LAND)))
+    logger.err("Unable to load land tile.");
+  if(!_tWater.loadFromFile(assetsObj.getGraphicsName(graphics::TILE_WATER)))
+    logger.err("Unable to load water tile.");
+  if(!_tBridge.loadFromFile(assetsObj.getGraphicsName(graphics::TILE_BRIDGE)))
+    logger.err("Unable to load bridge tile.");
+  logger.err("am i even logging");
 
   // Set Sprites
   _sGround.setTexture(_tGround);
