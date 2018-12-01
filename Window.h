@@ -6,6 +6,7 @@
 
 class sfmlWindowClass {
   public:
+    sfmlWindowClass();
     sf::Vector2u _getWindowResoSize() const;
     sf::RenderWindow& _getRefSFMLWindow();
   private:
@@ -19,6 +20,16 @@ sf::Vector2u sfmlWindowClass::_getWindowResoSize() const {
 
 sf::RenderWindow& sfmlWindowClass::_getRefSFMLWindow() {
   return _rWindow;
+}
+
+sfmlWindowClass::sfmlWindowClass() {
+  _rWindow.create(
+      // Specify a resolution size
+      sf::VideoMode(_rWindowSizeResolution.x, _rWindowSizeResolution.y),
+      // Window  Title
+      "Dead Mouse SFML",
+      // Window options
+      sf::Style::Close);
 }
 
 #endif
