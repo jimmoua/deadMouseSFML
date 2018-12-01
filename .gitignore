@@ -1,0 +1,6 @@
+*.swp
+*.swo
+vgcore*
+Makefile
+makefile
+*.out
