@@ -11,13 +11,6 @@
  * moves, its status, etc. It can be thought of as a character class when
  * dealing with RPG. */
 
-// Define some nice status for the mouse
-enum class mouseStatusEnum {
-  ALIVE,
-  DROWNED,
-  ESCAPED,
-  STARVED
-};
 
 // Mouse class
 class mouseType {
@@ -26,6 +19,7 @@ class mouseType {
     mouseStatusEnum _getMouseState() const;
     std::pair<int, int> _getMouseLoc() const;
     void _move();
+    void _setMouseStatus(const mouseStatusEnum&);
   private:
     const unsigned short int _maxMouseMoves = 50;
     mouseStatusEnum _mouseState;
