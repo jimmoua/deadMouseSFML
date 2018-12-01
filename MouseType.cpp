@@ -29,7 +29,7 @@ mouseStatusEnum mouseType::_getMouseState() const {
 
 /* ----------------------------------------------------------------------------
  * Function:
- *   resetWaitTime()
+ *   _move()
  * Description:
  *   If the clock can be reseted, reset it and move the mouse a random
  *   location.
@@ -46,20 +46,38 @@ void mouseType::_move() {
     unsigned short int move = rand()%4;
     switch(move) {
       case 0:
-        _mouseSprite.move(0, 64);
+        _mouseSprite.move(0, -64);
+        _currentMouseLoc.second++;
+        std::cout << "Mouse moved up\n";
         break;
       case 1:
-        _mouseSprite.move(0, -64);
+        _mouseSprite.move(0, 64);
+        _currentMouseLoc.second--;
+        std::cout << "Mouse moved down\n";
         break;
       case 2:
-        _mouseSprite.move(64, 0);
+        _mouseSprite.move(-64, 0);
+        _currentMouseLoc.first--;
+        std::cout << "cout << Mouse moved left\n";
         break;
       case 3:
-        _mouseSprite.move(-64, 0);
+        _mouseSprite.move(64, 0);
+        _currentMouseLoc.first++;
+        std::cout << "cout << Mouse moved right\n";
         break;
     }
     _mouseMoveWaitTime.restart();
   }
   // Draw the mouse
   winObj._getRefSFMLWindow()->draw(_mouseSprite);
+}
+
+/* ----------------------------------------------------------------------------
+ * Function:
+ *   _getMouseLoc()
+ * Description:
+ *   Gets the std::pair of mouse location
+ * --------------------------------------------------------------------------*/
+std::pair<int, int> mouseType::_getMouseLoc() const {
+  return _currentMouseLoc;
 }

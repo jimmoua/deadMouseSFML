@@ -24,6 +24,7 @@ class mouseType {
   public:
     mouseType(std::pair<int, int>);
     mouseStatusEnum _getMouseState() const;
+    std::pair<int, int> _getMouseLoc() const;
     void _move();
   private:
     const unsigned short int _maxMouseMoves = 50;
