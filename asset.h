@@ -16,7 +16,7 @@ namespace dm {
   class assets {
     public:
       assets();
-      std::string& getGraphicsName(graphics& key);
+      std::string& getGraphicsName(const graphics& key);
     private:
       static sf::Font gameFont;
       
@@ -33,7 +33,7 @@ namespace dm {
     _assetGraphpics[graphics::TILE_MOUSE] = "./assets/tiles/red_slime.png";
   }
 
-  std::string& assets::getGraphicsName(graphics& key) {
+  std::string& assets::getGraphicsName(const graphics& key) {
     return _assetGraphpics[key];
   }
 
