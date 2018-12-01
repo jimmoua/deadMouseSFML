@@ -1,4 +1,6 @@
 #include "IslandType.h"
+#include "asset.h"
+#include "Window.h"
 
 islandType::islandType() {
   // Load the textures in
@@ -13,5 +15,14 @@ islandType::islandType() {
 }
 
 void islandType::drawMap() {
-  const sf::Vector2u = winObj._getWindowResoSize();
+  const sf::Vector2u reso = winObj._getWindowResoSize();
+
+  // Draw x
+  for(unsigned short int x = 0; x != reso.x; x++) {
+
+    // Draw y
+    for(unsigned short int y = 0; y != reso.y; y++) {
+
+    }
+  }
 }
