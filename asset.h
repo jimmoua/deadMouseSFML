@@ -13,6 +13,14 @@ enum class graphics {
   WALLPAPER_TITLE
 };
 
+// Define some nice status for the mouse
+enum class mouseStatusEnum {
+  ALIVE,
+  DROWNED,
+  ESCAPED,
+  STARVED
+};
+
 class assets {
   public:
     assets();

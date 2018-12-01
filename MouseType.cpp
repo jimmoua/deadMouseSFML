@@ -81,3 +81,13 @@ void mouseType::_move() {
 std::pair<int, int> mouseType::_getMouseLoc() const {
   return _currentMouseLoc;
 }
+
+/* ----------------------------------------------------------------------------
+ * Function:
+ *   _setMouseStatus(const mouseStatusEnum&)
+ * Description:
+ *   Sets the mouse status enum value
+ * --------------------------------------------------------------------------*/
+void mouseType::_setMouseStatus(const mouseStatusEnum& key) {
+  _mouseState = key;
+}
