@@ -16,7 +16,7 @@ class sfmlWindowClass {
   private:
     static sf::RenderWindow* _rWindow;
     static sf::Vector2u _rWindowSizeResolution;
-    sf::Event _windowEvent; // Use this to poll windows in different states
+    static sf::Event _windowEvent; // Use this to poll windows in different states
 };
 
 // Externs

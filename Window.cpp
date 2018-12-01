@@ -6,6 +6,7 @@ sfmlWindowClass winObj;
 // Static members (must be declared here)
 sf::Vector2u sfmlWindowClass::_rWindowSizeResolution;
 sf::RenderWindow* sfmlWindowClass::_rWindow;
+sf::Event sfmlWindowClass:: _windowEvent;
 
 sf::Vector2u sfmlWindowClass::_getWindowResoSize() const {
   return _rWindowSizeResolution;
