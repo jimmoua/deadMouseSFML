@@ -9,9 +9,11 @@ class sfmlWindowClass {
     sfmlWindowClass();
     sf::Vector2u _getWindowResoSize() const;
     sf::RenderWindow& _getRefSFMLWindow();
+    sf::Event& _getEvent();
   private:
     sf::RenderWindow _rWindow;
     sf::Vector2u _rWindowSizeResolution = sf::Vector2u(480, 640);
+    sf::Event _windowEvent; // Use this to poll windows in different states
 };
 
 sf::Vector2u sfmlWindowClass::_getWindowResoSize() const {
@@ -30,6 +32,10 @@ sfmlWindowClass::sfmlWindowClass() {
       "Dead Mouse SFML",
       // Window options
       sf::Style::Close);
+}
+
+sf::Event& sfmlWindowClass::_getEvent() {
+  return _windowEvent;
 }
 
 #endif
