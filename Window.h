@@ -12,7 +12,7 @@ class sfmlWindowClass {
     sf::Event& _getEvent();
   private:
     sf::RenderWindow _rWindow;
-    sf::Vector2u _rWindowSizeResolution = sf::Vector2u(480, 640);
+    sf::Vector2u _rWindowSizeResolution = sf::Vector2u(720, 720);
     sf::Event _windowEvent; // Use this to poll windows in different states
 };
 
