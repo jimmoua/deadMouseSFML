@@ -8,11 +8,13 @@
 class sfmlWindowClass {
   public:
     sfmlWindowClass();
+    ~sfmlWindowClass();
     sf::Vector2u _getWindowResoSize() const;
-    sf::RenderWindow& _getRefSFMLWindow();
+    sf::RenderWindow* _getRefSFMLWindow();
     sf::Event& _getEvent();
+    void _windowInit();
   private:
-    static sf::RenderWindow _rWindow;
+    static sf::RenderWindow* _rWindow;
     static sf::Vector2u _rWindowSizeResolution;
     sf::Event _windowEvent; // Use this to poll windows in different states
 };
