@@ -1,8 +1,8 @@
 #ifndef ASSET_H
 #define ASSET_H
-
 #include <SFML/Graphics.hpp>
 #include <map>
+#include <iostream>
 
 enum class graphics {
   TILE_BRIDGE,

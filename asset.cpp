@@ -1,5 +1,11 @@
 #include "asset.h"
 
+// Static must be defined here
+sf::Font assets::gameFont;
+
+// Extern
+assets assetsObj;
+
 // Default ctor
 assets::assets() {
   // Load graphics for tiles and characters.
@@ -12,7 +18,3 @@ assets::assets() {
 std::string& assets::getGraphicsName(const graphics& key) {
   return _assetGraphpics[key];
 }
-
-// Static declarations
-sf::Font assets::gameFont;
-
