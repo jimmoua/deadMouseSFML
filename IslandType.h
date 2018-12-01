@@ -15,10 +15,14 @@ const unsigned short int MIN_BRIDGES = 2;
 class islandType {
   public:
     islandType();
+    bool init();
     void drawMap();
-    bool getGrid();
     unsigned short int getGridSize();
+    friend void debug(islandType&);
   private:
+    // Grid information checker
+    bool getGrid();
+
     // Textures
     sf::Texture _tGround;
     sf::Texture _tWater;

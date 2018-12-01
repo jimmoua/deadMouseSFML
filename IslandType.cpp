@@ -3,22 +3,9 @@
 #include "Window.h"
 
 // Statics
-std::string islandType::mapName;
+std::string islandType::mapName = "./assets/maps/";
 
 islandType::islandType() {
-  // Load the textures in
-  _tGround.loadFromFile(assetsObj.getGraphicsName(graphics::TILE_LAND));
-  _tWater.loadFromFile(assetsObj.getGraphicsName(graphics::TILE_WATER));
-  _tBridge.loadFromFile(assetsObj.getGraphicsName(graphics::TILE_BRIDGE));
-
-  // Set Sprites
-  _sGround.setTexture(_tGround);
-  _sWater.setTexture(_tWater);
-  _sBridge.setTexture(_tBridge);
-  
-  std::cout << "Enter in a map name: ";
-  std::getline(std::cin, mapName);
-  std::cin.ignore();
 }
 
 // Function for getting grid information
@@ -27,14 +14,15 @@ bool islandType::getGrid() {
   int l_totalGridArea = 0;
   int l_mouseCounter = 0;
 
-  std::ifstream infile;   // Create the std::ifstream object that allows for file reading.
+  std::ifstream infile;   // Create the read from map...
   infile.open(mapName.c_str());
   if(!infile) {
     logger.err("Unable to open file");
     return false;   // Return code 1 = can't open file.
   }
   else {
-    // First, check if the file is empty. If it is, the function returns 9 which indicates empty file.
+    // First, check if the file is empty. If it is, the function returns 9
+    // which indicates empty file.
     
     infile >> gridSize;// This line reads in the specified size of the grid
     if(!infile) {
@@ -166,8 +154,7 @@ bool islandType::getGrid() {
     }
     infile.close();
   }
-
-  return 0;
+  return true;
 }
 
 void islandType::drawMap() {
@@ -186,4 +173,31 @@ void islandType::drawMap() {
 // Gets grid size. Needed for window initialization
 unsigned short int islandType::getGridSize() {
   return gridSize;
+}
+
+bool islandType::init() {
+  // Load the textures in
+  _tGround.loadFromFile(assetsObj.getGraphicsName(graphics::TILE_LAND));
+  _tWater.loadFromFile(assetsObj.getGraphicsName(graphics::TILE_WATER));
+  _tBridge.loadFromFile(assetsObj.getGraphicsName(graphics::TILE_BRIDGE));
+
+  // Set Sprites
+  _sGround.setTexture(_tGround);
+  _sWater.setTexture(_tWater);
+  _sBridge.setTexture(_tBridge);
+
+  // Set to 0 so increment without overflow
+  gridSize = 0;
+  numBridges = 0;
+
+  std::cout << "Enter in a map name: ";
+  std::string mapAppend;
+  std::getline(std::cin, mapAppend);
+  mapName.append(mapAppend);
+  return getGrid();
+}
+
+void debug(islandType& obj) {
+  std::cout << "Grid size:   " << obj.gridSize << std::endl;
+  std::cout << "Name of map: " << obj.mapName << std::endl;
 }
