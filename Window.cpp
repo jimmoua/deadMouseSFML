@@ -27,14 +27,10 @@ sf::Event& sfmlWindowClass::_getEvent() {
   return _windowEvent;
 }
 
-void sfmlWindowClass::_windowInit() {
-  // Get a specific resolution...
-  unsigned short int x, y;
-  std::cout << "Enter in width and height: ";
-  std::cin >> x >> y;
+void sfmlWindowClass::_windowInit(const unsigned short int& reso) {
   // Each width and height is multiplied by 64 to represent resolution.
-  _rWindowSizeResolution.x = x*64;
-  _rWindowSizeResolution.y = y*64;
+  _rWindowSizeResolution.x = reso*64;
+  _rWindowSizeResolution.y = reso*64;
 
   // Create the SMFL window
   _rWindow->create(

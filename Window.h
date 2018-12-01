@@ -12,7 +12,7 @@ class sfmlWindowClass {
     sf::Vector2u _getWindowResoSize() const;
     sf::RenderWindow* _getRefSFMLWindow();
     sf::Event& _getEvent();
-    void _windowInit();
+    void _windowInit(const unsigned short int&);
   private:
     static sf::RenderWindow* _rWindow;
     static sf::Vector2u _rWindowSizeResolution;
