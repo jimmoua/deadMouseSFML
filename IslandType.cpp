@@ -8,6 +8,13 @@ std::string islandType::mapName = "./assets/maps/";
 islandType::islandType() {
 }
 
+/* ----------------------------------------------------------------------------
+ * Function:
+ *   getGrid()
+ *
+ * Description:
+ *   Gets information from a map file.
+ * --------------------------------------------------------------------------*/
 // Function for getting grid information
 bool islandType::getGrid() {
   // Used to count total area and mouse
@@ -170,6 +177,9 @@ void islandType::drawMap() {
   for(unsigned short int x = 0; x != gridSize; x++) {
     // Draw cols
     for(unsigned short int y = 0; y != gridSize; y++) {
+      /* For setPosition, set the y as first parameter because setPosition is
+       * dealing with the x parameter first. Because of this, we need to pass
+       * the y in because we are drawing y-cols first. */
       switch(islandMap[x][y]) {
         case -2:
           winObj._getRefSFMLWindow()->draw(_sBridge);
