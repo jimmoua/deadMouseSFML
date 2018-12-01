@@ -15,6 +15,6 @@ void log::err(const std::string& msg) {
   auto time
     = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
   // Log time and error message
-  out << std::ctime(&time) << ": " << msg << std::endl;
+  out << std::ctime(&time) << msg << "\n\n";
   out.close();
 }

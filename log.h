@@ -9,7 +9,7 @@ class log {
     void err(const std::string&);
   private:
     std::ofstream out;
-    const std::string errorFile = "errors.log";
+    const std::string errorFile = "./logs/errors.log";
 };
 
 // Define extern
