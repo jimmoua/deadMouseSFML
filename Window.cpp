@@ -9,7 +9,7 @@ sfmlWindowClass winObj;
  * Static class members of sfmlWindowClass defined here
  * --------------------------------------------------------------------------*/
 sf::Vector2u sfmlWindowClass::_rWindowSizeResolution;
-sf::RenderWindow* sfmlWindowClass::_rWindow;
+sf::RenderWindow* sfmlWindowClass::_rWindow = nullptr;
 sf::Event sfmlWindowClass:: _windowEvent;
 
 /* ----------------------------------------------------------------------------

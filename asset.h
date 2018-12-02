@@ -3,6 +3,17 @@
 #include <SFML/Graphics.hpp>
 #include <map>
 #include <iostream>
+#include "Window.h"
+
+/* ----------------------------------------------------------------------------
+ * Declare some const variables here. These indicate the max and min values
+ * that a map is required to have to be properly loaded.
+ * --------------------------------------------------------------------------*/
+const unsigned short int MAX_SIZE = 20;
+const unsigned short int MIN_SIZE  = 3;
+const unsigned short int MAX_BRIDGES = 15;
+const unsigned short int MIN_BRIDGES = 2;
+const unsigned short int MAXMOUSEMOVES = 20;
 
 /* ----------------------------------------------------------------------------
  * Enumerators for identifying textures via std::maps
@@ -39,6 +50,10 @@ class assets {
     std::string& getGraphicsName(const graphics& key);
     sf::Text& _getText(const mouseStatusEnum& key);
     sf::Font& _getFont() const;
+    void _showMsgReset();
+    void _restartClockTimer();
+    void _init();
+    short int _getTimer() const;
   private:
     static sf::Font _gameFont;
     static sf::Text _textDrowned;
@@ -50,6 +65,10 @@ class assets {
     static std::map<graphics, std::string> _assetGraphpics;
     // Container to hold texts based on mouse status
     static std::map<mouseStatusEnum, sf::Text> _assetTexts;
+
+    static sf::Text _timerTxt;
+    static short int _timer;
+    static sf::Clock _timerReset;
 };
 
 /* ----------------------------------------------------------------------------

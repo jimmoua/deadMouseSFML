@@ -36,7 +36,7 @@ mouseType::mouseType(std::pair<int, int> pos) {
   _txtMouseMoves.setString(std::to_string(_mouseMoves));
   _txtMouseMoves.setFillColor(sf::Color::White);
   _txtMouseMoves.setOutlineColor(sf::Color::Black);
-  _txtMouseMoves.setPosition(16, 72);
+  _txtMouseMoves.setPosition(16, 96);
 }
 
 /* ----------------------------------------------------------------------------
@@ -69,7 +69,7 @@ void mouseType::_move() {
       //   1 = Down
       //   2 = Left
       //   3 = Right
-      srand(time(NULL)); // For random number
+      srand(time(0)); // For random number
       unsigned short int move = rand()%4;
       switch(move) {
         case 0:
@@ -98,15 +98,6 @@ void mouseType::_move() {
       _mouseMoveWaitTime.restart();
       _mouseMoves++;
       _txtMouseMoves.setString(std::to_string(_mouseMoves));
-
-      // After moving, check to see if max moves have been acquired. If so, the
-      // mouse was too stupid to find the bridge and thus starved itself to
-      // death.
-      if(_mouseMoves == _maxMouseMoves) {
-        _mouseState = mouseStatusEnum::STARVED;
-        std::cout << "The mouse starved\n";
-        _mouseState = mouseStatusEnum::STARVED;
-      }
     }
   }
 
@@ -135,4 +126,27 @@ std::pair<int, int> mouseType::_getMouseLoc() const {
  * --------------------------------------------------------------------------*/
 void mouseType::_setMouseStatus(const mouseStatusEnum& key) {
   _mouseState = key;
+}
+
+/* ----------------------------------------------------------------------------
+ * FUNCTION:
+ *   _getMoves() const
+ * DESCRIPTION:
+ *   Gets number of mouse moves. Fn needed for status checking in IslandType
+ * --------------------------------------------------------------------------*/
+unsigned short int& mouseType::_getMoves() const {
+  return _mouseMoves;
+}
+
+/* ----------------------------------------------------------------------------
+ * FUNCTION:
+ *   _reset(std::pair<int, int>&)
+ * DESCRIPTION:
+ *   Resets the mouse position and number of moves. It is called in main.
+ * --------------------------------------------------------------------------*/
+void mouseType::_reset(std::pair<int, int> pos) {
+  _mouseMoves = 0;
+  _currentMouseLoc = pos;
+  _mouseSprite.setPosition((pos.first-1)*__SCALE__, (pos.second+1)*__SCALE__);
+  _mouseState = mouseStatusEnum::ALIVE;
 }

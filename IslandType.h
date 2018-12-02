@@ -9,15 +9,6 @@
 #include <vector>
 
 /* ----------------------------------------------------------------------------
- * Declare some const variables here. These indicate the max and min values
- * that a map is required to have to be properly loaded.
- * --------------------------------------------------------------------------*/
-const unsigned short int MAX_SIZE = 20;
-const unsigned short int MIN_SIZE  = 3;
-const unsigned short int MAX_BRIDGES = 15;
-const unsigned short int MIN_BRIDGES = 2;
-
-/* ----------------------------------------------------------------------------
  * CLASS:
  *   islandType
  * DESCRIPTION:
@@ -29,8 +20,9 @@ class islandType {
     bool init(const std::string&);
     void drawMap();
     unsigned short int getGridSize() const;
-    std::pair<int, int> getMouseStartingLoc();
-    mouseStatusEnum _checkCollisions(std::pair<int, int>);
+    std::pair<int, int> getMouseStartingLoc() const;
+    mouseStatusEnum _checkCollisions(std::pair<int, int>, unsigned short int&);
+    void _reset();
   private:
     // Grid information checker
     bool getGrid(const std::string&);

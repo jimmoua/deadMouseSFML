@@ -27,7 +27,7 @@ bool islandType::getGrid(const std::string& fileName) {
 
   // Create ifstream obj to read from file
   std::ifstream infile;
-  infile.open(fileName.c_str());
+  infile.open(std::string("assets/maps/")+fileName.c_str());
   if(!infile) {
     logger.err("Unable to open file: " + fileName + " was not found.");
     return false;
@@ -249,7 +249,7 @@ bool islandType::init(const std::string &fileName) {
  * Description:
  *   Returns the std::pair for mouse location.
  * --------------------------------------------------------------------------*/
-std::pair<int, int> islandType::getMouseStartingLoc() {
+std::pair<int, int> islandType::getMouseStartingLoc() const {
   return mouseStartLoc;
 }
 
@@ -259,22 +259,37 @@ std::pair<int, int> islandType::getMouseStartingLoc() {
  * Description:
  *   Checks to see where the mouse is.
  * --------------------------------------------------------------------------*/
-mouseStatusEnum islandType::_checkCollisions(std::pair<int, int> mouseLoc) {
+mouseStatusEnum islandType::_checkCollisions(std::pair<int, int> mouseLoc,
+    unsigned short int& mouseMoves) {
   mouseStatusEnum newMouseState;
-  switch(islandMap[mouseLoc.first][mouseLoc.second]) {
-    case -2:
-      newMouseState = mouseStatusEnum::ESCAPED;
-      std::cout << "The mouse escaped: " << mouseLoc.first << " " <<
-        mouseLoc.second << std::endl;
-      break;
-    case -1:
-      newMouseState = mouseStatusEnum::DROWNED;
-      std::cout << "The mouse drowned: " << mouseLoc.first << " " <<
-        mouseLoc.second << std::endl;
-      break;
-    default:
-      newMouseState = mouseStatusEnum::ALIVE;
-      break;
+  // The mouse has moved previous to this function call, so check mouse number
+  // of moves first.
+  if(mouseMoves == MAXMOUSEMOVES) {
+    newMouseState = mouseStatusEnum::STARVED;
   }
+  else {
+    switch(islandMap[mouseLoc.first][mouseLoc.second]) {
+      case -2:
+        newMouseState = mouseStatusEnum::ESCAPED;
+        std::cout << "The mouse escaped: " << mouseLoc.first << " " <<
+          mouseLoc.second << std::endl;
+        break;
+      case -1:
+        newMouseState = mouseStatusEnum::DROWNED;
+        std::cout << "The mouse drowned: " << mouseLoc.first << " " <<
+          mouseLoc.second << std::endl;
+        break;
+      default:
+        newMouseState = mouseStatusEnum::ALIVE;
+        break;
+    }
+  }
+  // If the mouse is no longer alive, we will have a "delay" before starting
+  // the next simulation. This delay is done here.
+  if(mouseMoves == MAXMOUSEMOVES) {
+    newMouseState = mouseStatusEnum::STARVED;
+  }
+  if(newMouseState != mouseStatusEnum::ALIVE)
+    assetsObj._restartClockTimer();
   return newMouseState;
 }

@@ -20,9 +20,9 @@ class mouseType {
     std::pair<int, int> _getMouseLoc() const;
     void _move();
     void _setMouseStatus(const mouseStatusEnum&);
+    unsigned short int& _getMoves() const;
+    void _reset(std::pair<int, int>);
   private:
-    // The max number of moves the mouse can move before starving
-    const unsigned short int _maxMouseMoves = 20;
     static unsigned short int _mouseMoves;
 
     // The state of the mouse
