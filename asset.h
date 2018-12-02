@@ -32,10 +32,11 @@ class assets {
     static sf::Text _textDrowned;
     static sf::Text _textEscaped;
     static sf::Text _textStarved;
+    static sf::Text _textAlive;
 
     // Container to hold graphics. Second argument is file loc
-    std::map<graphics, std::string> _assetGraphpics;
-    std::map<mouseStatusEnum, sf::Text*> _assetTexts;
+    static std::map<graphics, std::string> _assetGraphpics;
+    static std::map<mouseStatusEnum, sf::Text> _assetTexts;
 };
 
 // Externs

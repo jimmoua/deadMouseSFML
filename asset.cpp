@@ -2,9 +2,12 @@
 
 // Static must be defined here
 sf::Font assets::_gameFont;
+std::map<mouseStatusEnum, sf::Text> assets::_assetTexts;
+std::map<graphics, std::string> assets::_assetGraphpics;
 sf::Text assets::_textDrowned;
 sf::Text assets::_textEscaped;
 sf::Text assets::_textStarved;
+sf::Text assets::_textAlive;
 
 
 // Extern
@@ -18,41 +21,45 @@ assets::assets() {
   _assetGraphpics[graphics::TILE_LAND] = "./assets/tiles/grass.png";
   _assetGraphpics[graphics::TILE_MOUSE] = "./assets/tiles/red_slime.png";
 
-  // Dynamic allocate text
-
   // Load texts
   _gameFont.loadFromFile("./assets/font/oldschooladventures.ttf");
 
   // Define drowned text
   _textDrowned.setFont(_gameFont);
-  _textEscaped.setString("Drowned!");
-  _textDrowned.setOutlineThickness(2.0f);
+  _textDrowned.setString("Drowned!");
+  _textDrowned.setOutlineThickness(5.0f);
   _textDrowned.setOutlineColor(sf::Color::Black);
-  _textStarved.setCharacterSize(36u);
+  _textDrowned.setCharacterSize(48u);
   _textDrowned.setFillColor(sf::Color::White);
-  _textDrowned.setPosition(64, 64);
 
   // Define escaped text
   _textEscaped.setFont(_gameFont);
   _textEscaped.setString("Esacped!"); 
-  _textEscaped.setOutlineThickness(2.0f);
-  _textDrowned.setOutlineColor(sf::Color::Black);
-  _textStarved.setCharacterSize(36u);
+  _textEscaped.setOutlineThickness(5.0f);
+  _textEscaped.setOutlineColor(sf::Color::Black);
+  _textEscaped.setCharacterSize(48u);
   _textEscaped.setFillColor(sf::Color::White);
-  _textEscaped.setPosition(64, 64);
 
   // Define starved text
   _textStarved.setFont(_gameFont);
-  _textEscaped.setString("Starved!");
-  _textStarved.setOutlineThickness(2.0f);
-  _textDrowned.setOutlineColor(sf::Color::Black);
-  _textStarved.setCharacterSize(36u);
+  _textStarved.setString("Starved!");
+  _textStarved.setOutlineThickness(5.0f);
+  _textStarved.setOutlineColor(sf::Color::Black);
+  _textStarved.setCharacterSize(48u);
   _textStarved.setFillColor(sf::Color::White);
-  _textStarved.setPosition(64, 64);
 
-  _assetTexts[mouseStatusEnum::DROWNED] = &_textDrowned;
-  _assetTexts[mouseStatusEnum::ESCAPED] = &_textEscaped;
-  _assetTexts[mouseStatusEnum::STARVED] = &_textStarved;
+  // Define alive text
+  _textAlive.setFont(_gameFont);
+  _textAlive.setString("Alive");
+  _textAlive.setOutlineThickness(5.0f);
+  _textAlive.setOutlineColor(sf::Color::Black);
+  _textAlive.setCharacterSize(48u);
+  _textAlive.setFillColor(sf::Color::White);
+
+  _assetTexts[mouseStatusEnum::DROWNED] = _textDrowned;
+  _assetTexts[mouseStatusEnum::ESCAPED] = _textEscaped;
+  _assetTexts[mouseStatusEnum::STARVED] = _textStarved;
+  _assetTexts[mouseStatusEnum::ALIVE] = _textAlive;
 
 }
 
@@ -67,7 +74,7 @@ std::string& assets::getGraphicsName(const graphics& key) {
  *   Gets the text depending on what enum value argument is.
  * --------------------------------------------------------------------------*/
 sf::Text& assets::_getText(const mouseStatusEnum& key) {
-  return *_assetTexts[key];
+  return _assetTexts[key];
 }
 
 /* ----------------------------------------------------------------------------
