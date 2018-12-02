@@ -6,6 +6,11 @@
  * --------------------------------------------------------------------------*/
 sf::Clock mouseType::_mouseMoveWaitTime;
 unsigned short int mouseType::_mouseMoves;
+unsigned short int mouseType::_mouseDeaths;
+unsigned short int mouseType::_mouseStarved;
+unsigned short int mouseType::_mouseEscaped;
+unsigned short int mouseType::_mouseDrowned;
+unsigned short int mouseType::_simsRan;
 mouseStatusEnum mouseType::_mouseState;
 std::pair<int, int> mouseType::_currentMouseLoc;
 sf::Text mouseType::_txtMouseMoves;
@@ -21,6 +26,10 @@ sf::Sprite mouseType::_mouseSprite;
  * --------------------------------------------------------------------------*/
 mouseType::mouseType(std::pair<int, int> pos) {
   // Define some things for the mouse here.
+  _mouseDeaths = 0;
+  _mouseStarved = 0;
+  _mouseEscaped = 0;
+  _simsRan = 0;
   _mouseMoves = 0;
   _mouseState = mouseStatusEnum::ALIVE;
   _mouseTexture.loadFromFile(assetsObj.getGraphicsName(graphics::TILE_MOUSE));
@@ -142,11 +151,54 @@ unsigned short int& mouseType::_getMoves() const {
  * FUNCTION:
  *   _reset(std::pair<int, int>&)
  * DESCRIPTION:
- *   Resets the mouse position and number of moves. It is called in main.
+ *   Resets the mouse position and number of moves. It is called in main. If
+ *   this reset is called, that means we should increment the numbers of
+ *   whatever its status was by one and sims by 1.
  * --------------------------------------------------------------------------*/
 void mouseType::_reset(std::pair<int, int> pos) {
   _mouseMoves = 0;
   _currentMouseLoc = pos;
   _mouseSprite.setPosition((pos.first-1)*__SCALE__, (pos.second+1)*__SCALE__);
+
+  // Increment identifying status
+  switch(_mouseState) {
+    case mouseStatusEnum::ALIVE:
+      break;
+    case mouseStatusEnum::DROWNED:
+      _mouseDrowned++;
+      break;
+    case mouseStatusEnum::ESCAPED:
+      _mouseEscaped++;
+      break;
+    case mouseStatusEnum::STARVED:
+      _mouseStarved++;
+      break;
+  }
+  _simsRan++;
   _mouseState = mouseStatusEnum::ALIVE;
+}
+
+/* ----------------------------------------------------------------------------
+ * FUNCTION:
+ *   _record()
+ * DESCRIPTION:
+ *   If the window is exited, record the simulation of the mouse.
+ * --------------------------------------------------------------------------*/
+void mouseType::_record() {
+  // Create string so we can append status to it.
+  std::string m("\0");
+
+  m.append("Mouse starved: ");
+  m.append(std::to_string(_mouseStarved) + " times.\n");
+
+  m.append("Mouse escaped: ");
+  m.append(std::to_string(_mouseEscaped) + " times.\n");
+
+  m.append("Mouse drowned: ");
+  m.append(std::to_string(_mouseDrowned) + " times.\n");
+
+  m.append("Total simulations ran: ");
+  m.append(std::to_string(_simsRan));
+
+  logger.session(m);
 }

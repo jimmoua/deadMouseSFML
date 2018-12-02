@@ -56,5 +56,6 @@ int main(int argc, char* argv[]) {
     // Display the window.
     winObj._getRefSFMLWindow()->display();
   }
+  mouseObj._record();
   return EXIT_SUCCESS;
 }

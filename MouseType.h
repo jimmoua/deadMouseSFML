@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include "Window.h"
 #include "asset.h"
+#include "log.h"
 
 /* ----------------------------------------------------------------------------
  * CLASS:
@@ -22,7 +23,13 @@ class mouseType {
     void _setMouseStatus(const mouseStatusEnum&);
     unsigned short int& _getMoves() const;
     void _reset(std::pair<int, int>);
+    void _record();
   private:
+    static unsigned short int _mouseDeaths;
+    static unsigned short int _mouseStarved;
+    static unsigned short int _mouseEscaped;
+    static unsigned short int _mouseDrowned;
+    static unsigned short int _simsRan;
     static unsigned short int _mouseMoves;
 
     // The state of the mouse
