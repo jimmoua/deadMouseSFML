@@ -17,45 +17,59 @@ int main(int argc, char* argv[]) {
     return -1;
   }
 
+  // Create the mouseType object and define its location by getting it from the
+  // islandType object.
   mouseType mouseObj(islandObj.getMouseStartingLoc());
 
-  // Init the window and create it inside the init function
+  // Init the window by invoking init function of window class.
   winObj._windowInit(islandObj.getGridSize());
+
   // After window init, init the assets that need to be init after Window
   assetsObj._init();
+
+  // Begin main loop
   while(winObj._getRefSFMLWindow()->isOpen()) {
     while(winObj._getRefSFMLWindow()->pollEvent(winObj._getEvent())) {
-      // Poll the window
+      // Poll the window. If SFML window event is close, close the window.
       if(winObj._getEvent().type == sf::Event::Closed)
         winObj._getRefSFMLWindow()->close();
     }
-    // Paint window black
+
+    // Refresh screen black.
     winObj._getRefSFMLWindow()->clear(sf::Color::Black);
 
     // Draw the map
     islandObj.drawMap();
 
-    // Draw the mouse and simulation
+    // Draw the mouse by moving it.
     mouseObj._move();
 
-    // Check for collisions
+    // Check for collisions after moving the mouse. By checking the collisions,
+    // we are also checking its status. If it collides with something, then we
+    // handle status inside the collision.
     if(mouseObj._getMouseState() == mouseStatusEnum::ALIVE) {
       mouseObj._setMouseStatus(
           islandObj._checkCollisions(mouseObj._getMouseLoc(),
             mouseObj._getMoves()));
     }
+
+    // Draw the text representing current status of mouse.
     winObj._getRefSFMLWindow()->draw(assetsObj._getText(mouseObj._getMouseState()));
 
-    // If dead, show reset msg
+    // If dead, show reset message.
     if(mouseObj._getMouseState() != mouseStatusEnum::ALIVE) {
       assetsObj._showMsgReset();
       if(assetsObj._getTimer() == 0) {
         mouseObj._reset(islandObj.getMouseStartingLoc());
       }
     }
-    // Display the window.
+
+    // Display the SFML window.
     winObj._getRefSFMLWindow()->display();
   }
+
+  // SFML window closed, so record the session.
   mouseObj._record();
+
   return EXIT_SUCCESS;
 }
