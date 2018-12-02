@@ -30,8 +30,8 @@ sf::Event& sfmlWindowClass::_getEvent() {
 
 void sfmlWindowClass::_windowInit(const unsigned short int& reso) {
   // Each width and height is multiplied by 64 to represent resolution.
-  _rWindowSizeResolution.x = reso*64;
-  _rWindowSizeResolution.y = reso*64;
+  _rWindowSizeResolution.x = (reso)*64;
+  _rWindowSizeResolution.y = (reso)*64;
 
   // Create the SMFL window
   _rWindow->create(

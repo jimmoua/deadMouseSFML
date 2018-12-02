@@ -174,25 +174,25 @@ bool islandType::getGrid() {
 void islandType::drawMap() {
   // Each sprite is a 64x64 because that's how the png were made.
   // Draw rows
-  for(unsigned short int x = 0; x != gridSize; x++) {
+  for(unsigned short int x = 0; x != gridSize+1; x++) {
     // Draw cols
-    for(unsigned short int y = 0; y != gridSize; y++) {
+    for(unsigned short int y = 0; y != gridSize+1; y++) {
       /* For setPosition, set the y as first parameter because setPosition is
        * dealing with the x parameter first. Because of this, we need to pass
        * the y in because we are drawing y-cols first. */
       switch(islandMap[x][y]) {
         case -2:
           winObj._getRefSFMLWindow()->draw(_sBridge);
-          _sBridge.setPosition(y*64, x*64);
+          _sBridge.setPosition(x*64, y*64);
           break;
         case -1:
           winObj._getRefSFMLWindow()->draw(_sWater);
-          _sWater.setPosition(y*64, x*64);
+          _sWater.setPosition(x*64, y*64);
           break;
         case 0:
         case 1:
           winObj._getRefSFMLWindow()->draw(_sGround);
-          _sGround.setPosition(y*64, x*64);
+          _sGround.setPosition(x*64, y*64);
           break;
         default: break;
       }
@@ -257,12 +257,17 @@ mouseStatusEnum islandType::_checkCollisions(std::pair<int, int> mouseLoc) {
   switch(islandMap[mouseLoc.first][mouseLoc.second]) {
     case -2:
       newMouseState = mouseStatusEnum::ESCAPED;
+      std::cout << "The mouse escaped: " << mouseLoc.first << " " <<
+        mouseLoc.second << std::endl;
       break;
     case -1:
       newMouseState = mouseStatusEnum::DROWNED;
+      std::cout << "The mouse drowned: " << mouseLoc.first << " " <<
+        mouseLoc.second << std::endl;
       break;
     default:
       newMouseState = mouseStatusEnum::ALIVE;
+      break;
   }
   return newMouseState;
 }

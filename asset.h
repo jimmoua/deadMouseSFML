@@ -25,11 +25,16 @@ class assets {
   public:
     assets();
     std::string& getGraphicsName(const graphics& key);
+    sf::Text& _getText(const mouseStatusEnum& key);
   private:
-    static sf::Font gameFont;
-    
+    static sf::Font _gameFont;
+    static sf::Text _textDrowned;
+    static sf::Text _textEscaped;
+    static sf::Text _textStarved;
+
     // Container to hold graphics. Second argument is file loc
     std::map<graphics, std::string> _assetGraphpics;
+    std::map<mouseStatusEnum, sf::Text*> _assetTexts;
 };
 
 // Externs
