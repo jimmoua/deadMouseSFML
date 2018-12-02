@@ -219,18 +219,24 @@ bool islandType::init(const std::string &fileName) {
   // Load the textures in and set sprites if successful
   if(!_tGround.loadFromFile(assetsObj.getGraphicsName(graphics::TILE_LAND)))
     logger.err("Unable to load land tile.");
-  else
+  else {
     _sGround.setTexture(_tGround);
+    _sGround.setScale(0.5f, 0.5f);
+  }
 
   if(!_tWater.loadFromFile(assetsObj.getGraphicsName(graphics::TILE_WATER)))
     logger.err("Unable to load water tile.");
-  else
+  else {
     _sWater.setTexture(_tWater);
+    _sWater.setScale(0.5f, 0.5f);
+  }
 
   if(!_tBridge.loadFromFile(assetsObj.getGraphicsName(graphics::TILE_BRIDGE)))
     logger.err("Unable to load bridge tile.");
-  else
+  else {
     _sBridge.setTexture(_tBridge);
+    _sBridge.setScale(0.5f, 0.5f);
+  }
 
   // Begin loading map
   return getGrid(fileName);

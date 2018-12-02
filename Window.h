@@ -5,7 +5,7 @@
 #include <string>
 #include <iostream>
 
-const unsigned short int __SCALE__ = 64u;
+const unsigned short int __SCALE__ = 32u;
 
 /* ----------------------------------------------------------------------------
  * CLASS:

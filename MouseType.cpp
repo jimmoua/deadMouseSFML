@@ -25,7 +25,9 @@ mouseType::mouseType(std::pair<int, int> pos) {
   _mouseState = mouseStatusEnum::ALIVE;
   _mouseTexture.loadFromFile(assetsObj.getGraphicsName(graphics::TILE_MOUSE));
   _mouseSprite.setTexture(_mouseTexture);
-  _mouseSprite.setPosition((pos.first-1)*64, (pos.second+1)*64);
+  _mouseSprite.setPosition((pos.first-1)*__SCALE__, (pos.second+1)*__SCALE__);
+  // Scale by half since trying to get 32. The png image is 64x64
+  _mouseSprite.scale(0.5f, 0.5f);
   _currentMouseLoc = pos;
 
   // Define the text for mouse move counter
@@ -71,22 +73,22 @@ void mouseType::_move() {
       unsigned short int move = rand()%4;
       switch(move) {
         case 0:
-          _mouseSprite.move(0, -64);
+          _mouseSprite.move(0, -__SCALE__);
           _currentMouseLoc.first--;
           std::cout << "Mouse moved up\n";
           break;
         case 1:
-          _mouseSprite.move(0, 64);
+          _mouseSprite.move(0, __SCALE__);
           _currentMouseLoc.first++;
           std::cout << "Mouse moved down\n";
           break;
         case 2:
-          _mouseSprite.move(-64, 0);
+          _mouseSprite.move(-__SCALE__, 0);
           _currentMouseLoc.second--;
           std::cout << "Mouse moved left\n";
           break;
         case 3:
-          _mouseSprite.move(64, 0);
+          _mouseSprite.move(__SCALE__, 0);
           _currentMouseLoc.second++;
           std::cout << "Mouse moved right\n";
           break;
