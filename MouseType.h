@@ -38,7 +38,7 @@ class mouseType {
     static sf::Text _txtMouseMoves;
 
     // Mouse images
-    static sf::Texture _mouseTextures;
+    static sf::Texture _mouseTexture;
     static sf::Sprite _mouseSprite;
 };
 

@@ -6,7 +6,7 @@ unsigned short int mouseType::_mouseMoves;
 mouseStatusEnum mouseType::_mouseState;
 std::pair<int, int> mouseType::_currentMouseLoc;
 sf::Text mouseType::_txtMouseMoves;
-sf::Texture mouseType::_mouseTextures;
+sf::Texture mouseType::_mouseTexture;
 sf::Sprite mouseType::_mouseSprite;
 
 /* ----------------------------------------------------------------------------
