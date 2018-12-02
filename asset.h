@@ -27,6 +27,7 @@ class assets {
     virtual ~assets();
     std::string& getGraphicsName(const graphics& key);
     sf::Text& _getText(const mouseStatusEnum& key);
+    sf::Font& _getFont() const;
   private:
     static sf::Font _gameFont;
     static sf::Text _textDrowned;

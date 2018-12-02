@@ -85,3 +85,13 @@ sf::Text& assets::_getText(const mouseStatusEnum& key) {
  * --------------------------------------------------------------------------*/
 assets::~assets() {
 }
+
+/* ----------------------------------------------------------------------------
+ * Function:
+ *   getFont()
+ * Description:
+ *   Gets the game font.
+ * --------------------------------------------------------------------------*/
+sf::Font& assets::_getFont() const {
+  return _gameFont;
+}
