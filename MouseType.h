@@ -21,18 +21,25 @@ class mouseType {
     void _move();
     void _setMouseStatus(const mouseStatusEnum&);
   private:
+    // The max number of moves the mouse can move before starving
     const unsigned short int _maxMouseMoves = 20;
     static unsigned short int _mouseMoves;
+
+    // The state of the mouse
     static mouseStatusEnum _mouseState;
+
+    // Keeping stack of the mouse location
     static std::pair<int, int> _currentMouseLoc;
+
+    // Use for waiting for mouse to move.
     static sf::Clock _mouseMoveWaitTime;
 
     // Used to keep track of count and display on SFML window.
     static sf::Text _txtMouseMoves;
 
     // Mouse images
-    sf::Texture _mouseTexture;
-    sf::Sprite _mouseSprite;
+    static sf::Texture _mouseTextures;
+    static sf::Sprite _mouseSprite;
 };
 
 #endif
