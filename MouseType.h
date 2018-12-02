@@ -27,6 +27,9 @@ class mouseType {
     static std::pair<int, int> _currentMouseLoc;
     static sf::Clock _mouseMoveWaitTime;
 
+    // Used to keep track of count and display on SFML window.
+    static sf::Text _txtMouseMoves;
+
     // Mouse images
     sf::Texture _mouseTexture;
     sf::Sprite _mouseSprite;

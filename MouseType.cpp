@@ -5,6 +5,7 @@ sf::Clock mouseType::_mouseMoveWaitTime;
 unsigned short int mouseType::_mouseMoves;
 mouseStatusEnum mouseType::_mouseState;
 std::pair<int, int> mouseType::_currentMouseLoc;
+sf::Text mouseType::_txtMouseMoves;
 
 /* ----------------------------------------------------------------------------
  * Function:
@@ -13,12 +14,21 @@ std::pair<int, int> mouseType::_currentMouseLoc;
  *   The ctor
  * --------------------------------------------------------------------------*/
 mouseType::mouseType(std::pair<int, int> pos) {
+  // Define some things for the mouse here.
   _mouseMoves = 0;
   _mouseState = mouseStatusEnum::ALIVE;
   _mouseTexture.loadFromFile(assetsObj.getGraphicsName(graphics::TILE_MOUSE));
   _mouseSprite.setTexture(_mouseTexture);
   _mouseSprite.setPosition((pos.first-1)*64, (pos.second+1)*64);
   _currentMouseLoc = pos;
+
+  // Define the text for mouse move counter
+  _txtMouseMoves.setFont(assetsObj._getFont());
+  _txtMouseMoves.setOutlineThickness(5u);
+  _txtMouseMoves.setString(std::to_string(_mouseMoves));
+  _txtMouseMoves.setFillColor(sf::Color::White);
+  _txtMouseMoves.setOutlineColor(sf::Color::Black);
+  _txtMouseMoves.setPosition(16, 72);
 }
 
 /* ----------------------------------------------------------------------------
@@ -41,8 +51,6 @@ mouseStatusEnum mouseType::_getMouseState() const {
  *   location.
  * --------------------------------------------------------------------------*/
 void mouseType::_move() {
-  // Draw the mouse
-  winObj._getRefSFMLWindow()->draw(_mouseSprite);
   if(_mouseState == mouseStatusEnum::ALIVE) {
     auto t = _mouseMoveWaitTime.getElapsedTime().asSeconds();
     if(t > sf::seconds(0.10f).asSeconds()) {
@@ -79,6 +87,7 @@ void mouseType::_move() {
       }
       _mouseMoveWaitTime.restart();
       _mouseMoves++;
+      _txtMouseMoves.setString(std::to_string(_mouseMoves));
       if(_mouseMoves == _maxMouseMoves) {
         _mouseState = mouseStatusEnum::STARVED;
         std::cout << "The mouse starved\n";
@@ -86,6 +95,11 @@ void mouseType::_move() {
       }
     }
   }
+  // Draw the mouse
+  winObj._getRefSFMLWindow()->draw(_mouseSprite);
+
+  // Draw the total number of moves
+  winObj._getRefSFMLWindow()->draw(_txtMouseMoves);
 }
 
 /* ----------------------------------------------------------------------------
