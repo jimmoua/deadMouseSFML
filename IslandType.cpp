@@ -172,9 +172,9 @@ bool islandType::getGrid(const std::string& fileName) {
 void islandType::drawMap() {
   // Each sprite is a 64x64 because that's how the png were made.
   // Draw rows
-  for(unsigned short int x = 0; x != gridSize+1; x++) {
+  for(unsigned short int x = 0; x != gridSize; x++) {
     // Draw cols
-    for(unsigned short int y = 0; y != gridSize+1; y++) {
+    for(unsigned short int y = 0; y != gridSize; y++) {
       /* For setPosition, set the y as first parameter because setPosition is
        * dealing with the x parameter first. Because of this, we need to pass
        * the y in because we are drawing y-cols first. */
