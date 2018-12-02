@@ -1,7 +1,7 @@
-#include "Window.h"
-#include "IslandType.h"
-#include "asset.h"
-#include "MouseType.h"
+#include "../include/Window.h"
+#include "../include/IslandType.h"
+#include "../include/asset.h"
+#include "../include/MouseType.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) {

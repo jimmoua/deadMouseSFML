@@ -1,4 +1,4 @@
-#include "asset.h"
+#include "../include/asset.h"
 
 /* ----------------------------------------------------------------------------
  * Static variables from assets class must be defined here

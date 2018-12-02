@@ -1,6 +1,6 @@
-#include "IslandType.h"
-#include "asset.h"
-#include "Window.h"
+#include "../include/IslandType.h"
+#include "../include/asset.h"
+#include "../include/Window.h"
 
 /* ----------------------------------------------------------------------------
  * FUNCTION:

@@ -7,22 +7,22 @@ all: $(TARGETS)
 	$(CXX) $(TARGETS) $(CXXFLAGS)
 
 main.o:
-	$(CXX) main.cpp -c $(CSTDFLAGS)
+	$(CXX) ./src/main.cpp -c $(CSTDFLAGS)
 
 Window.o:
-	$(CXX) Window.cpp -c $(CSTDFLAGS)
+	$(CXX) ./src/Window.cpp -c $(CSTDFLAGS)
 
 asset.o:
-	$(CXX) asset.cpp -c $(CSTDFLAGS)
+	$(CXX) ./src/asset.cpp -c $(CSTDFLAGS)
 
 IslandType.o:
-	$(CXX) IslandType.cpp -c $(CSTDFLAGS)
+	$(CXX) ./src/IslandType.cpp -c $(CSTDFLAGS)
 
 log.o:
-	$(CXX) log.cpp -c $(CSTDFLAGS)
+	$(CXX) ./src/log.cpp -c $(CSTDFLAGS)
 
 MouseType.o:
-	$(CXX) MouseType.cpp -c $(CSTDFLAGS)
+	$(CXX) ./src/MouseType.cpp -c $(CSTDFLAGS)
 
 rm:
 	rm -v $(TARGETS) *.out
