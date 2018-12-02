@@ -4,6 +4,9 @@
 
 // Statics
 std::string islandType::mapName = "./assets/maps/";
+std::vector<sf::RectangleShape> islandType::_colWater;
+std::vector<sf::RectangleShape> islandType::_colBridge;
+std::vector<sf::RectangleShape> islandType::_colOther;
 
 islandType::islandType() {
 }
@@ -73,7 +76,7 @@ bool islandType::getGrid() {
        * about whether it is a bridge or if it is a mouse because we will be
        * making ordered pairs out of them. */
       switch(islandMap[i][k]) {
-        case -2:
+        case -2: {
           /* Adding this if statement to check and see if the max number
            * of bridge is created because lovely stack smashing is
            * detected */
@@ -84,18 +87,54 @@ bool islandType::getGrid() {
           bridgeLoc[numBridges].first = i;
           bridgeLoc[numBridges].second = k;
           numBridges++;
+          sf::RectangleShape temp;
+          temp.setSize(sf::Vector2f(63.f, 63.f));
+          // The +1 is for the 1 pixel offset, since 63 above.
+          temp.setPosition(k*64+1, i*64+1);
+          temp.setOutlineThickness(2.f);
+          temp.setOutlineColor(sf::Color::Black);
+          temp.setFillColor(sf::Color(0,0,0,0));
+          _colBridge.push_back(temp);
           break;
-        case -1:
+        }
+        case -1: {
+          // If water
+          sf::RectangleShape temp;
+          temp.setSize(sf::Vector2f(63.f, 63.f));
+          // The +1 is for the 1 pixel offset, since 63 above.
+          temp.setPosition(k*64+1, i*64+1);
+          temp.setOutlineThickness(2.f);
+          temp.setOutlineColor(sf::Color::Black);
+          temp.setFillColor(sf::Color(0,0,0,0));
+          _colWater.push_back(temp);
           break;
-        case 1: // If mouse
+        }
+        case 1: {
+          // If mouse
           if(l_mouseCounter == 0) {
             mouseStartLoc.first = i;
             mouseStartLoc.second = k;
           }
           l_mouseCounter++;
+          sf::RectangleShape temp;
+          temp.setSize(sf::Vector2f(63.f, 63.f));
+          temp.setPosition(k*64+1, i*64+1);
+          temp.setOutlineThickness(2.f);
+          temp.setOutlineColor(sf::Color::Black);
+          temp.setFillColor(sf::Color(0,0,0,0));
+          _colOther.push_back(temp);
           break;
+        }
         case 0: {
           /* We read in a tile, so do nothing */
+          // The +1 is for the 1 pixel offset, since 63 above.
+          sf::RectangleShape temp;
+          temp.setSize(sf::Vector2f(63.f, 63.f));
+          temp.setPosition(k*64+1, i*64+1);
+          temp.setOutlineThickness(2.f);
+          temp.setOutlineColor(sf::Color::Black);
+          temp.setFillColor(sf::Color(0,0,0,0));
+          _colOther.push_back(temp);
           break;
         }
         default:
@@ -180,7 +219,7 @@ void islandType::drawMap() {
       /* For setPosition, set the y as first parameter because setPosition is
        * dealing with the x parameter first. Because of this, we need to pass
        * the y in because we are drawing y-cols first. */
-      switch(islandMap[x][y]) {
+      switch(islandMap[y][x]) {
         case -2:
           winObj._getRefSFMLWindow()->draw(_sBridge);
           _sBridge.setPosition(x*64, y*64);
@@ -197,6 +236,15 @@ void islandType::drawMap() {
         default: break;
       }
     }
+  }
+  for(auto iter = _colWater.begin(); iter!= _colWater.end(); iter++) {
+    winObj._getRefSFMLWindow()->draw(*iter);
+  }
+  for(auto iter = _colBridge.begin(); iter!= _colBridge.end(); iter++) {
+    winObj._getRefSFMLWindow()->draw(*iter);
+  }
+  for(auto iter = _colOther.begin(); iter!= _colOther.end(); iter++) {
+    winObj._getRefSFMLWindow()->draw(*iter);
   }
 }
 

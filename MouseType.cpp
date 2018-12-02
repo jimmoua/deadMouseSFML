@@ -17,7 +17,7 @@ mouseType::mouseType(std::pair<int, int> pos) {
   _mouseState = mouseStatusEnum::ALIVE;
   _mouseTexture.loadFromFile(assetsObj.getGraphicsName(graphics::TILE_MOUSE));
   _mouseSprite.setTexture(_mouseTexture);
-  _mouseSprite.setPosition((pos.first)*64, (pos.second-1)*64);
+  _mouseSprite.setPosition((pos.first-1)*64, (pos.second+1)*64);
   _currentMouseLoc = pos;
 }
 

@@ -41,4 +41,5 @@ void sfmlWindowClass::_windowInit(const unsigned short int& reso) {
       "Dead Mouse SFML",
       // Window options
       sf::Style::Close);
+  _rWindow->setFramerateLimit(60u);
 }

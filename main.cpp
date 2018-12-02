@@ -36,9 +36,7 @@ int main() {
     if(mouseObj._getMouseState() == mouseStatusEnum::ALIVE) {
       mouseObj._setMouseStatus(islandObj._checkCollisions(mouseObj._getMouseLoc()));
     }
-    if(mouseObj._getMouseState() != mouseStatusEnum::ALIVE) {
-      winObj._getRefSFMLWindow()->draw(assetsObj._getText(mouseObj._getMouseState()));
-    }
+    winObj._getRefSFMLWindow()->draw(assetsObj._getText(mouseObj._getMouseState()));
 
     // Display the window.
     winObj._getRefSFMLWindow()->display();

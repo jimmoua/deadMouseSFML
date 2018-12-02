@@ -6,10 +6,11 @@
 #include "Window.h"
 #include <fstream>
 #include "log.h"
+#include <vector>
 
 const unsigned short int MAX_SIZE = 20;
 const unsigned short int MIN_SIZE  = 3;
-const unsigned short int MAX_BRIDGES = 10;
+const unsigned short int MAX_BRIDGES = 15;
 const unsigned short int MIN_BRIDGES = 2;
 
 class islandType {
@@ -43,5 +44,10 @@ class islandType {
     std::pair<int, int> mouseStartLoc;
     std::pair<int, int> bridgeLoc[MAX_BRIDGES];
     unsigned short int numBridges;
+
+    // SFML collisions
+    static std::vector<sf::RectangleShape> _colWater;
+    static std::vector<sf::RectangleShape> _colBridge;
+    static std::vector<sf::RectangleShape> _colOther;
 };
 #endif
