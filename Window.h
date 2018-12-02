@@ -5,10 +5,18 @@
 #include <string>
 #include <iostream>
 
+const unsigned short int __SCALE__ = 64u;
+
+/* ----------------------------------------------------------------------------
+ * CLASS:
+ *   sfmlWindowClass
+ * DESCRIPTION:
+ *   Class for handling the SFML window.
+ * --------------------------------------------------------------------------*/
 class sfmlWindowClass {
   public:
     sfmlWindowClass();
-    ~sfmlWindowClass();
+    virtual ~sfmlWindowClass();
     sf::Vector2u _getWindowResoSize() const;
     sf::RenderWindow* _getRefSFMLWindow();
     sf::Event& _getEvent();
@@ -19,7 +27,9 @@ class sfmlWindowClass {
     static sf::Event _windowEvent; // Use this to poll windows in different states
 };
 
-// Externs
+/* ----------------------------------------------------------------------------
+ * Declare externs
+ * --------------------------------------------------------------------------*/
 extern sfmlWindowClass winObj;
 
 

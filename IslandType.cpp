@@ -2,39 +2,39 @@
 #include "asset.h"
 #include "Window.h"
 
-// Statics
-std::string islandType::mapName = "./assets/maps/";
-std::vector<sf::RectangleShape> islandType::_colWater;
-std::vector<sf::RectangleShape> islandType::_colBridge;
-std::vector<sf::RectangleShape> islandType::_colOther;
-
+/* ----------------------------------------------------------------------------
+ * FUNCTION:
+ *   islandType()
+ * DESCRIPTION:
+ *   Default ctor. Doesn't do anything. Refer to init fn instead.
+ * --------------------------------------------------------------------------*/
 islandType::islandType() {
 }
 
 /* ----------------------------------------------------------------------------
- * Function:
+ * FUNCTION:
  *   getGrid()
  *
- * Description:
- *   Gets information from a map file.
+ * DESCRIPTION:
+ *   Gets information from a map/grid file.
  * --------------------------------------------------------------------------*/
-// Function for getting grid information
-bool islandType::getGrid() {
-  // Used to count total area and mouse
+bool islandType::getGrid(const std::string& fileName) {
+  // Used to count total area and mouse. Will be used for err checking.
   int l_totalGridArea = 0;
   int l_mouseCounter = 0;
+  int numBridges = 0;
+  gridSize = 0;
 
-  std::ifstream infile;   // Create the read from map...
-  infile.open(mapName.c_str());
+  // Create ifstream obj to read from file
+  std::ifstream infile;
+  infile.open(fileName.c_str());
   if(!infile) {
-    logger.err("Unable to open file");
-    return false;   // Return code 1 = can't open file.
+    logger.err("Unable to open file: " + fileName + " was not found.");
+    return false;
   }
   else {
-    // First, check if the file is empty. If it is, the function returns 9
-    // which indicates empty file.
-    
-    infile >> gridSize;// This line reads in the specified size of the grid
+    // Read first line, which is gridSize. The map is a square.
+    infile >> gridSize;
     if(!infile) {
       if(infile.eof()) {
         logger.err("File is empty.");
@@ -76,7 +76,7 @@ bool islandType::getGrid() {
        * about whether it is a bridge or if it is a mouse because we will be
        * making ordered pairs out of them. */
       switch(islandMap[i][k]) {
-        case -2: {
+        case -2:
           /* Adding this if statement to check and see if the max number
            * of bridge is created because lovely stack smashing is
            * detected */
@@ -84,72 +84,31 @@ bool islandType::getGrid() {
             infile.close();
             logger.err("Too many bridges.");
           }
-          bridgeLoc[numBridges].first = i;
-          bridgeLoc[numBridges].second = k;
           numBridges++;
-          sf::RectangleShape temp;
-          temp.setSize(sf::Vector2f(63.f, 63.f));
-          // The +1 is for the 1 pixel offset, since 63 above.
-          temp.setPosition(k*64+1, i*64+1);
-          temp.setOutlineThickness(2.f);
-          temp.setOutlineColor(sf::Color::Black);
-          temp.setFillColor(sf::Color(0,0,0,0));
-          _colBridge.push_back(temp);
           break;
-        }
-        case -1: {
-          // If water
-          sf::RectangleShape temp;
-          temp.setSize(sf::Vector2f(63.f, 63.f));
-          // The +1 is for the 1 pixel offset, since 63 above.
-          temp.setPosition(k*64+1, i*64+1);
-          temp.setOutlineThickness(2.f);
-          temp.setOutlineColor(sf::Color::Black);
-          temp.setFillColor(sf::Color(0,0,0,0));
-          _colWater.push_back(temp);
+        case -1:
+        case  0:
           break;
-        }
-        case 1: {
+        case  1:
           // If mouse
           if(l_mouseCounter == 0) {
             mouseStartLoc.first = i;
             mouseStartLoc.second = k;
           }
           l_mouseCounter++;
-          sf::RectangleShape temp;
-          temp.setSize(sf::Vector2f(63.f, 63.f));
-          temp.setPosition(k*64+1, i*64+1);
-          temp.setOutlineThickness(2.f);
-          temp.setOutlineColor(sf::Color::Black);
-          temp.setFillColor(sf::Color(0,0,0,0));
-          _colOther.push_back(temp);
           break;
-        }
-        case 0: {
-          /* We read in a tile, so do nothing */
-          // The +1 is for the 1 pixel offset, since 63 above.
-          sf::RectangleShape temp;
-          temp.setSize(sf::Vector2f(63.f, 63.f));
-          temp.setPosition(k*64+1, i*64+1);
-          temp.setOutlineThickness(2.f);
-          temp.setOutlineColor(sf::Color::Black);
-          temp.setFillColor(sf::Color(0,0,0,0));
-          _colOther.push_back(temp);
-          break;
-        }
         default:
-          /* The switch defaults if it read in something that isn't
-           * recognizable. This means that it read in a value that doesn't
-           * represent a bridge, water, land, or mouse */
+          // The switch defaults if it read in something that isn't
+          // recognizable. This means that it read in a value that doesn't
+          // represent a bridge, water, land, or mouse
           logger.err("Missing or incorrect grid size");
           return false;
       }
-      /* k++ allows the next slot of the array to be pulled up since for loops
-       * aren't being used. Inside the if statement, we are saying everytime k
-       * is equal to the total max that we are allowed to read in for 1 row,
-       * which is the same value as Size, we will go to the next row and also
-       * reset the value of k back to 0 so we can go index the array correctly.
-       * */
+      // k++ allows the next slot of the array to be pulled up since for loops
+      // aren't being used. Inside the if statement, we are saying everytime k
+      // is equal to the total max that we are allowed to read in for 1 row,
+      // which is the same value as Size, we will go to the next row and also
+      // reset the value of k back to 0 so we can go index the array correctly.
       k++;
       if(k == gridSize) {
         i++;
@@ -157,13 +116,13 @@ bool islandType::getGrid() {
       }
     }
 
-    /* Do some error checking below, as mentioned above */
+    // Do some error checking below, as mentioned above.
 
-    /* Check to see if there was a mouse defined.
-     *   We don't care to check if there are too many
-     *   mice down here (after the loop), since we are
-     *   already checking to see if there are already
-     *   too many mice defined inside the loop. */
+    // Check to see if there was a mouse defined.
+    // We don't care to check if there are too many
+    // mice down here (after the loop), since we are
+    // already checking to see if there are already
+    // too many mice defined inside the loop. */
     if(l_mouseCounter == 0) {
       infile.close();
       logger.err("Missing mouse location");
@@ -175,7 +134,7 @@ bool islandType::getGrid() {
       return false;
     }
     
-    /* Does the map meet the satisfied number of bridges? */
+    // Does the map meet the satisfied number of bridges?
     if(numBridges < MIN_BRIDGES) {
       infile.close();
       logger.err("Missing bridges.");
@@ -222,60 +181,59 @@ void islandType::drawMap() {
       switch(islandMap[y][x]) {
         case -2:
           winObj._getRefSFMLWindow()->draw(_sBridge);
-          _sBridge.setPosition(x*64, y*64);
+          _sBridge.setPosition(x*__SCALE__, y*__SCALE__);
           break;
         case -1:
           winObj._getRefSFMLWindow()->draw(_sWater);
-          _sWater.setPosition(x*64, y*64);
+          _sWater.setPosition(x*__SCALE__, y*__SCALE__);
           break;
         case 0:
         case 1:
           winObj._getRefSFMLWindow()->draw(_sGround);
-          _sGround.setPosition(x*64, y*64);
+          _sGround.setPosition(x*__SCALE__, y*__SCALE__);
           break;
         default: break;
       }
     }
   }
-  for(auto iter = _colWater.begin(); iter!= _colWater.end(); iter++) {
-    winObj._getRefSFMLWindow()->draw(*iter);
-  }
-  for(auto iter = _colBridge.begin(); iter!= _colBridge.end(); iter++) {
-    winObj._getRefSFMLWindow()->draw(*iter);
-  }
-  for(auto iter = _colOther.begin(); iter!= _colOther.end(); iter++) {
-    winObj._getRefSFMLWindow()->draw(*iter);
-  }
 }
 
-// Gets grid size. Needed for window initialization
-unsigned short int islandType::getGridSize() {
+/* ----------------------------------------------------------------------------
+ * FUNCTION:
+ *   getGridSize()
+ * DESCRIPTION:
+ *   Returns the grid size.
+ * --------------------------------------------------------------------------*/
+unsigned short int islandType::getGridSize() const {
   return gridSize;
 }
 
-bool islandType::init() {
-  // Load the textures in
+/* ----------------------------------------------------------------------------
+ * FUNCTION:
+ *   init()
+ * DESCRIPTION:
+ *   The init function. Loads in all the textures of the island type. Use an
+ *   init function because we do not use extern for obj.
+ * --------------------------------------------------------------------------*/
+bool islandType::init(const std::string &fileName) {
+  // Load the textures in and set sprites if successful
   if(!_tGround.loadFromFile(assetsObj.getGraphicsName(graphics::TILE_LAND)))
     logger.err("Unable to load land tile.");
+  else
+    _sGround.setTexture(_tGround);
+
   if(!_tWater.loadFromFile(assetsObj.getGraphicsName(graphics::TILE_WATER)))
     logger.err("Unable to load water tile.");
+  else
+    _sWater.setTexture(_tWater);
+
   if(!_tBridge.loadFromFile(assetsObj.getGraphicsName(graphics::TILE_BRIDGE)))
     logger.err("Unable to load bridge tile.");
+  else
+    _sBridge.setTexture(_tBridge);
 
-  // Set Sprites
-  _sGround.setTexture(_tGround);
-  _sWater.setTexture(_tWater);
-  _sBridge.setTexture(_tBridge);
-
-  // Set to 0 so increment without overflow
-  gridSize = 0;
-  numBridges = 0;
-
-  std::cout << "Enter in a map name: ";
-  std::string mapAppend;
-  std::getline(std::cin, mapAppend);
-  mapName.append(mapAppend);
-  return getGrid();
+  // Begin loading map
+  return getGrid(fileName);
 }
 
 /* ----------------------------------------------------------------------------
@@ -287,11 +245,6 @@ bool islandType::init() {
  * --------------------------------------------------------------------------*/
 std::pair<int, int> islandType::getMouseStartingLoc() {
   return mouseStartLoc;
-}
-
-void debug(islandType& obj) {
-  std::cout << "Grid size:   " << obj.gridSize << std::endl;
-  std::cout << "Name of map: " << obj.mapName << std::endl;
 }
 
 /* ----------------------------------------------------------------------------

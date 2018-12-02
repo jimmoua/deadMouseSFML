@@ -18,5 +18,7 @@ class log {
     const std::string errorFile = "./logs/errors.log";
 };
 
-// Define extern
+/* ----------------------------------------------------------------------------
+ * Define externs here.
+ * --------------------------------------------------------------------------*/
 extern log logger;

@@ -4,6 +4,9 @@
 #include <map>
 #include <iostream>
 
+/* ----------------------------------------------------------------------------
+ * Enumerators for identifying textures via std::maps
+ * --------------------------------------------------------------------------*/
 enum class graphics {
   TILE_BRIDGE,
   TILE_WATER,
@@ -13,7 +16,9 @@ enum class graphics {
   WALLPAPER_TITLE
 };
 
-// Define some nice status for the mouse
+/* ----------------------------------------------------------------------------
+ * Enumerators for mouse states.
+ * --------------------------------------------------------------------------*/
 enum class mouseStatusEnum {
   ALIVE,
   DROWNED,
@@ -21,6 +26,12 @@ enum class mouseStatusEnum {
   STARVED
 };
 
+/* ----------------------------------------------------------------------------
+ * CLASS NAME:
+ *   assets
+ * DESCRIPTION:
+ *   This class is for managing assets.
+ * --------------------------------------------------------------------------*/
 class assets {
   public:
     assets();
@@ -35,12 +46,15 @@ class assets {
     static sf::Text _textStarved;
     static sf::Text _textAlive;
 
-    // Container to hold graphics. Second argument is file loc
+    // Container to hold graphics. Second key is file loc
     static std::map<graphics, std::string> _assetGraphpics;
+    // Container to hold texts based on mouse status
     static std::map<mouseStatusEnum, sf::Text> _assetTexts;
 };
 
-// Externs
+/* ----------------------------------------------------------------------------
+ * Define externals
+ * --------------------------------------------------------------------------*/
 extern assets assetsObj;
 
 #endif

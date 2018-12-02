@@ -6,13 +6,13 @@
 #include "Window.h"
 #include "asset.h"
 
-/* This is the class that will be dealing with the entity of the mouse. This
- * means that in here, we are handling what the mouse does, its number of
- * moves, its status, etc. It can be thought of as a character class when
- * dealing with RPG. */
-
-
-// Mouse class
+/* ----------------------------------------------------------------------------
+ * CLASS:
+ *   mouseType
+ * DESCRIPTION:
+ *   Class that holds info about the mouse. Or in this case, since I'm too lazy
+ *   to make another image, it's just going to be a red slime :)
+ * --------------------------------------------------------------------------*/
 class mouseType {
   public:
     mouseType(std::pair<int, int>);

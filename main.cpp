@@ -4,10 +4,15 @@
 #include "MouseType.h"
 #include <iostream>
 
-int main() {
+int main(int argc, char* argv[]) {
   // Get the map via IslandType
   islandType islandObj;
-  if(!islandObj.init()) {
+  if(argc != 2) {
+    std::cerr << "Error: expected one filename. Received: " << argc-1;
+    std::cerr << std::endl;
+    return -1;
+  }
+  else if(!islandObj.init(argv[1])) {
     std::cerr << "Unable to load simulation. Check error logs.\n";
     return -1;
   }

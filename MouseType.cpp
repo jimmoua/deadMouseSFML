@@ -1,6 +1,9 @@
 #include "MouseType.h"
 
-// Statics
+
+/* ----------------------------------------------------------------------------
+ * Static Declarations
+ * --------------------------------------------------------------------------*/
 sf::Clock mouseType::_mouseMoveWaitTime;
 unsigned short int mouseType::_mouseMoves;
 mouseStatusEnum mouseType::_mouseState;
@@ -10,10 +13,11 @@ sf::Texture mouseType::_mouseTexture;
 sf::Sprite mouseType::_mouseSprite;
 
 /* ----------------------------------------------------------------------------
- * Function:
+ * FUNCTION:
  *   mouseType(std::pair<int, int>)
- * Description:
- *   The ctor
+ * DESCRIPTION:
+ *   The ctor. The argument is the mouse position that is handed from the
+ *   getGrid function from IslandType header.
  * --------------------------------------------------------------------------*/
 mouseType::mouseType(std::pair<int, int> pos) {
   // Define some things for the mouse here.
@@ -34,10 +38,9 @@ mouseType::mouseType(std::pair<int, int> pos) {
 }
 
 /* ----------------------------------------------------------------------------
- * Function:
+ * FUNCTION:
  *   getMouseState()
- *
- * Description:
+ * DESCRIPTION:
  *   Gets the current state of the mouse.
  * --------------------------------------------------------------------------*/
 mouseStatusEnum mouseType::_getMouseState() const {
@@ -46,13 +49,16 @@ mouseStatusEnum mouseType::_getMouseState() const {
 
 
 /* ----------------------------------------------------------------------------
- * Function:
+ * FUNCTION:
  *   _move()
- * Description:
+ * DESCRIPTION:
  *   If the clock can be reseted, reset it and move the mouse a random
- *   location.
+ *   location. The mouse is only moved if the status on it is still alive.
+ *   Otherwise, the mouse is just drawn (if not moving its last location when
+ *   it was alive is drawn).
  * --------------------------------------------------------------------------*/
 void mouseType::_move() {
+  // If the mouse is still alive, move it.
   if(_mouseState == mouseStatusEnum::ALIVE) {
     auto t = _mouseMoveWaitTime.getElapsedTime().asSeconds();
     if(t > sf::seconds(0.10f).asSeconds()) {
@@ -61,7 +67,7 @@ void mouseType::_move() {
       //   1 = Down
       //   2 = Left
       //   3 = Right
-      srand(time(NULL));
+      srand(time(NULL)); // For random number
       unsigned short int move = rand()%4;
       switch(move) {
         case 0:
@@ -90,6 +96,10 @@ void mouseType::_move() {
       _mouseMoveWaitTime.restart();
       _mouseMoves++;
       _txtMouseMoves.setString(std::to_string(_mouseMoves));
+
+      // After moving, check to see if max moves have been acquired. If so, the
+      // mouse was too stupid to find the bridge and thus starved itself to
+      // death.
       if(_mouseMoves == _maxMouseMoves) {
         _mouseState = mouseStatusEnum::STARVED;
         std::cout << "The mouse starved\n";
@@ -97,6 +107,7 @@ void mouseType::_move() {
       }
     }
   }
+
   // Draw the mouse
   winObj._getRefSFMLWindow()->draw(_mouseSprite);
 
@@ -105,9 +116,9 @@ void mouseType::_move() {
 }
 
 /* ----------------------------------------------------------------------------
- * Function:
+ * FUNCTION:
  *   _getMouseLoc()
- * Description:
+ * DESCRIPTION:
  *   Gets the std::pair of mouse location
  * --------------------------------------------------------------------------*/
 std::pair<int, int> mouseType::_getMouseLoc() const {
@@ -115,9 +126,9 @@ std::pair<int, int> mouseType::_getMouseLoc() const {
 }
 
 /* ----------------------------------------------------------------------------
- * Function:
+ * FUNCTION:
  *   _setMouseStatus(const mouseStatusEnum&)
- * Description:
+ * DESCRIPTION:
  *   Sets the mouse status enum value
  * --------------------------------------------------------------------------*/
 void mouseType::_setMouseStatus(const mouseStatusEnum& key) {

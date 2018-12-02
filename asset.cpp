@@ -1,6 +1,8 @@
 #include "asset.h"
 
-// Static must be defined here
+/* ----------------------------------------------------------------------------
+ * Static variables from assets class must be defined here
+ * --------------------------------------------------------------------------*/
 sf::Font assets::_gameFont;
 std::map<mouseStatusEnum, sf::Text> assets::_assetTexts;
 std::map<graphics, std::string> assets::_assetGraphpics;
@@ -10,10 +12,18 @@ sf::Text assets::_textStarved;
 sf::Text assets::_textAlive;
 
 
-// Extern
+/* ----------------------------------------------------------------------------
+ * Define extern here
+ * --------------------------------------------------------------------------*/
 assets assetsObj;
 
-// Default ctor
+/* ----------------------------------------------------------------------------
+ * FUNCTION:
+ *   assets()
+ * DESCRIPTION:
+ *   Default ctor of assets class. Loads SMFL assets and defines some other
+ *   assets such as text, etc, etc.
+ * --------------------------------------------------------------------------*/
 assets::assets() {
   // Load graphics for tiles and characters.
   _assetGraphpics[graphics::TILE_BRIDGE] = "./assets/tiles/bridge.png";
@@ -63,14 +73,20 @@ assets::assets() {
 
 }
 
+/* ----------------------------------------------------------------------------
+ * FUNCTION:
+ *   getGraphicsName(const graphics&)
+ * DESCRIPTION:
+ *   Gets the path of a texture based on the argument, which is an enum class.
+ * --------------------------------------------------------------------------*/
 std::string& assets::getGraphicsName(const graphics& key) {
   return _assetGraphpics[key];
 }
 
 /* ----------------------------------------------------------------------------
- * Function:
+ * FUNCTION:
  *   _getText(const mouseStatusEnum&)
- * Description:
+ * DESCRIPTION:
  *   Gets the text depending on what enum value argument is.
  * --------------------------------------------------------------------------*/
 sf::Text& assets::_getText(const mouseStatusEnum& key) {
@@ -78,18 +94,18 @@ sf::Text& assets::_getText(const mouseStatusEnum& key) {
 }
 
 /* ----------------------------------------------------------------------------
- * Function:
+ * FUNCTION:
  *   ~assets
- * Description:
+ * DESCRIPTION:
  *   Deletes dynamically allocated things
  * --------------------------------------------------------------------------*/
 assets::~assets() {
 }
 
 /* ----------------------------------------------------------------------------
- * Function:
+ * FUNCTION:
  *   getFont()
- * Description:
+ * DESCRIPTION:
  *   Gets the game font.
  * --------------------------------------------------------------------------*/
 sf::Font& assets::_getFont() const {
