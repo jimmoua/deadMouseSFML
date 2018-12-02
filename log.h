@@ -1,8 +1,14 @@
 #pragma once
 #include <fstream>
 #include <string>
-#include <filesystem>
+#include <chrono>
 
+/* ----------------------------------------------------------------------------
+ * CLASS:
+ *   log
+ * DESCRIPTION:
+ *   Class for logging
+ * --------------------------------------------------------------------------*/
 class log {
   public:
     log();

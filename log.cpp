@@ -1,14 +1,25 @@
 #include "log.h"
 
-// Define externs
+/* ----------------------------------------------------------------------------
+ * Define externs here
+ * --------------------------------------------------------------------------*/
 log logger;
 
+/* ----------------------------------------------------------------------------
+ * FUNCTION:
+ *   log()
+ * DESCRIPTION:
+ *   Default ctor
+ * --------------------------------------------------------------------------*/
 log::log() {
-  // New log every run
-  if(std::filesystem::exists("./logs/errors.log"))
-    std::filesystem::remove("./logs/errors.log");
 }
 
+/* ----------------------------------------------------------------------------
+ * FUNCTION:
+ *   err(const std::string&)
+ * DESCRIPTION:
+ *   Logs a message to the error log.
+ * --------------------------------------------------------------------------*/
 void log::err(const std::string& msg) {
   out.open(errorFile, std::ios::app);
   // Get the system time
