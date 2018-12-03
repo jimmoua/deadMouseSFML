@@ -12,6 +12,11 @@ log logger;
  *   Default ctor
  * --------------------------------------------------------------------------*/
 log::log() {
+  // If the directory logs does not exist, create it.
+  if(!std::filesystem::is_directory("./logs/")) {
+    if(!std::filesystem::create_directory("./logs"))
+      err("Unable to create the logs directory.");
+  }
 }
 
 /* ----------------------------------------------------------------------------

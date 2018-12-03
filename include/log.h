@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <chrono>
+#include <filesystem>
 
 /* ----------------------------------------------------------------------------
  * CLASS:
