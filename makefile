@@ -1,5 +1,5 @@
 CXX=clang++
-CXXFLAGS= -std=c++17 -Wall -lsfml-graphics -lsfml-system -lsfml-audio -lsfml-window
+CXXFLAGS= -std=c++17 -lstdc++fs -Wall -lsfml-graphics -lsfml-system -lsfml-audio -lsfml-window
 CSTDFLAGS= -std=c++17 -Wall
 TARGETS=main.o Window.o asset.o IslandType.o log.o MouseType.o
 
