@@ -1,28 +1,47 @@
-CXX=clang++
-CXXFLAGS= -std=c++17 -lstdc++fs -Wall -lsfml-graphics -lsfml-system -lsfml-audio -lsfml-window
-CSTDFLAGS= -std=c++17 -Wall
-TARGETS=main.o Window.o asset.o IslandType.o log.o MouseType.o
+CC=cc
+
+CCFLAGS= -lstdc++ \
+				 -std=c++17 \
+				 -lstdc++fs \
+				 -Wall \
+				 -lsfml-graphics \
+				 -lsfml-system \
+				 -lsfml-audio \
+				 -lsfml-window \
+				 -Iinclude/
+
+CSTDFLAGS= -std=c++17 \
+					 -Wall \
+					 -Wextra \
+					 -Iinclude/
+
+TARGETS=main.o \
+				Window.o \
+				asset.o \
+				IslandType.o \
+				log.o \
+				MouseType.o
 
 all: $(TARGETS)
-	$(CXX) $(TARGETS) $(CXXFLAGS)
+	$(CC) $(TARGETS) $(CCFLAGS)
 
 main.o:
-	$(CXX) ./src/main.cpp -c $(CSTDFLAGS)
+	$(CC) $(CSTDFLAGS) src/main.cpp -c
 
 Window.o:
-	$(CXX) ./src/Window.cpp -c $(CSTDFLAGS)
+	$(CC) $(CSTDFLAGS) src/Window.cpp -c
 
 asset.o:
-	$(CXX) ./src/asset.cpp -c $(CSTDFLAGS)
+	$(CC) $(CSTDFLAGS) src/asset.cpp -c
 
 IslandType.o:
-	$(CXX) ./src/IslandType.cpp -c $(CSTDFLAGS)
+	$(CC) $(CSTDFLAGS) src/IslandType.cpp -c
 
 log.o:
-	$(CXX) ./src/log.cpp -c $(CSTDFLAGS)
+	$(CC) $(CSTDFLAGS) src/log.cpp -c
 
 MouseType.o:
-	$(CXX) ./src/MouseType.cpp -c $(CSTDFLAGS)
+	$(CC) $(CSTDFLAGS) src/MouseType.cpp -c
 
 rm:
 	rm -v $(TARGETS) *.out
