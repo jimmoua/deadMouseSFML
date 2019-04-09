@@ -1,47 +1,28 @@
 CC=cc
 
-CCFLAGS= -lstdc++ \
-				 -std=c++17 \
-				 -lstdc++fs \
-				 -Wall \
-				 -lsfml-graphics \
-				 -lsfml-system \
-				 -lsfml-audio \
-				 -lsfml-window \
-				 -Iinclude/
+SRC_DIR=src
 
-CSTDFLAGS= -std=c++17 \
-					 -Wall \
-					 -Wextra \
-					 -Iinclude/
+SRC_EXT=cpp
 
-TARGETS=main.o \
-				Window.o \
-				asset.o \
-				IslandType.o \
-				log.o \
-				MouseType.o
+INCLUDE_DIR=include
 
-all: $(TARGETS)
-	$(CC) $(TARGETS) $(CCFLAGS)
+OBJ_DIR=obj
 
-main.o:
-	$(CC) $(CSTDFLAGS) src/main.cpp -c
+CFLAGS=-lstdc++ -std=c++17 -lstdc++fs -lsfml-graphics -lsfml-window -lsfml-system
 
-Window.o:
-	$(CC) $(CSTDFLAGS) src/Window.cpp -c
+WFLAGS=-Wall -Wextra -std=c++17 -lstdc++fs
 
-asset.o:
-	$(CC) $(CSTDFLAGS) src/asset.cpp -c
+EXE=deadMouseSFML
 
-IslandType.o:
-	$(CC) $(CSTDFLAGS) src/IslandType.cpp -c
+SOURCES := $(wildcard $(SRC_DIR)/*.$(SRC_EXT))
+OBJECTS := $(SOURCES:$(SRC_DIR)/%.$(SRC_EXT)=$(OBJ_DIR)/%.o)
 
-log.o:
-	$(CC) $(CSTDFLAGS) src/log.cpp -c
+all: $(OBJECTS)
+	$(CC) $(OBJECTS) $(CFLAGS) -o $(EXE)
 
-MouseType.o:
-	$(CC) $(CSTDFLAGS) src/MouseType.cpp -c
+$(OBJECTS): $(OBJ_DIR)/%.o : $(SRC_DIR)/%.cpp
+	@mkdir -p obj
+	$(CC) $(WFLAGS) -I$(INCLUDE_DIR) -c $< -o $@
 
-rm:
-	rm -v $(TARGETS) *.out
+clean:
+	rm $(OBJECTS) $(EXE) -v
